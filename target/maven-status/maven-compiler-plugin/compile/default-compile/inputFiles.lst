@@ -1,6 +1,8 @@
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/Domain.java
 /home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/videos/VideoModel.java
-/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/LocalClient.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/Client.java
 /home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/IModel.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/ApiApplicationInstaller.java
 /home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/ApiRequest.java
 /home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/images/ImageRepository.java
 /home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/repositories/IRepository.java
