@@ -1,0 +1,10 @@
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/videos/VideoModel.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/LocalClient.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/IModel.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/api/ApiRequest.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/images/ImageRepository.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/repositories/IRepository.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/specifications/fields/IdSpecification.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/domains/images/ImageModel.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/specifications/ISpecification.java
+/home/michael/Documents/Eclipse workspace/DataApi/src/main/java/infrastructure/specifications/logic/AndSpecification.java
