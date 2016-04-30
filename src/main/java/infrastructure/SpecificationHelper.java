@@ -6,6 +6,7 @@ import database.query.condition.WhereInQuery;
 import domains.Domain;
 import infrastructure.specifications.ISpecification;
 import infrastructure.specifications.fields.FieldEqualsSpecification;
+import infrastructure.specifications.logic.AndSpecification;
 
 public class SpecificationHelper {
 
@@ -13,7 +14,7 @@ public class SpecificationHelper {
 		SelectQuery query = new SelectQuery(table);
 		
 		AddSpecificationToQuery(query, specification);
-		
+		System.out.println(query.process());
 		return query;
 	}
 	
@@ -21,6 +22,10 @@ public class SpecificationHelper {
 		if (specification.getClass().getName().contains("FieldEquals")){
 			FieldEqualsSpecification spec = (FieldEqualsSpecification) specification;
 			query.addCondition(new WhereInQuery(spec.field, spec.values));
+		} else if (specification.getClass().getName().contains("And")){
+			AndSpecification spec = (AndSpecification) specification;
+			AddSpecificationToQuery(query, spec.left);
+			AddSpecificationToQuery(query, spec.right);
 		}
 	}
 }

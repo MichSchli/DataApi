@@ -2,6 +2,7 @@ package database.query.condition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import database.query.IQuery;
 
@@ -17,7 +18,7 @@ public class WhereInQuery implements IDbCondition {
 	}
 
 	public String process() {
-		return field+" in ("+String.join(",", values)+")";
+		return field+" in ("+values.stream().map(v -> "'"+v+"'").collect(Collectors.joining(","))+")";
 	}
 
 }
