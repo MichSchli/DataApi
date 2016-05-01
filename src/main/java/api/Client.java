@@ -4,6 +4,7 @@ import java.util.List;
 
 import domains.Domain;
 import domains.images.ImageRepository;
+import domains.tags.TagRepository;
 import infrastructure.IApiClient;
 import infrastructure.IModel;
 import infrastructure.repositories.IRepository;
@@ -11,10 +12,12 @@ import infrastructure.repositories.IRepository;
 public class Client implements IApiClient{
 
 	protected ImageRepository imageRepository;
+	protected TagRepository tagRepository;
 
 	public Client(){
 		ApiApplicationInstaller installer = new ApiApplicationInstaller();
 		this.imageRepository = installer.GetComponent(ImageRepository.class);
+		this.tagRepository = installer.GetComponent(TagRepository.class);
 	}
 	
 	public List<IModel> Search(ApiRequest request){
@@ -32,7 +35,8 @@ public class Client implements IApiClient{
 		switch (domain) {
 		case Images:
 			return imageRepository;
-
+		case Tags:
+			return tagRepository;
 		default:
 			return null;
 		}

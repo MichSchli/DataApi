@@ -7,6 +7,7 @@ import domains.Domain;
 import infrastructure.specifications.ISpecification;
 import infrastructure.specifications.fields.FieldEqualsSpecification;
 import infrastructure.specifications.logic.AndSpecification;
+import infrastructure.specifications.logic.OrSpecification;
 
 public class SpecificationHelper {
 
@@ -24,6 +25,10 @@ public class SpecificationHelper {
 			query.addCondition(new WhereInQuery(spec.field, spec.values));
 		} else if (specification.getClass().getName().contains("And")){
 			AndSpecification spec = (AndSpecification) specification;
+			AddSpecificationToQuery(query, spec.left);
+			AddSpecificationToQuery(query, spec.right);
+		} else if (specification.getClass().getName().contains("Or")){
+			OrSpecification spec = (OrSpecification) specification;
 			AddSpecificationToQuery(query, spec.left);
 			AddSpecificationToQuery(query, spec.right);
 		}

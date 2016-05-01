@@ -1,13 +1,13 @@
 package infrastructure.repositories;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.DatabaseException;
 import database.IDatabase;
+import database.IDatabaseResult;
 import database.query.IQuery;
-import domains.images.Image;
 import infrastructure.IModel;
 import infrastructure.specifications.ISpecification;
 
@@ -25,19 +25,19 @@ public abstract class BaseRepository<TModel extends IModel> implements IReposito
 	}
 	
 	public List<TModel> Retrieve(ISpecification specifications) {
-		ResultSet dbresults = database.executeQuery(SpecificationsToQuery(specifications));
+		IDatabaseResult dbresults = database.executeQuery(SpecificationsToQuery(specifications));
 		ArrayList<TModel> results = new ArrayList<TModel>();
 		try {
 			while(dbresults.next()){
 				results.add(ReadFromDb(dbresults));
 			}
-		} catch (SQLException e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 		return results;
 	}
 	
 	public abstract IQuery SpecificationsToQuery(ISpecification specifications);
-	public abstract TModel ReadFromDb(ResultSet dbResult) throws SQLException;
+	public abstract TModel ReadFromDb(IDatabaseResult dbResult) throws DatabaseException;
 	public abstract IQuery ModelToQuery(TModel model);
 }

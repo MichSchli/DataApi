@@ -8,6 +8,7 @@ import java.sql.Statement;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import database.IDatabase;
+import database.IDatabaseResult;
 import database.query.IQuery;
 
 public class MySqlDatabase implements IDatabase {
@@ -46,13 +47,13 @@ public class MySqlDatabase implements IDatabase {
 		
 	}
 
-	public ResultSet executeQuery(IQuery query){
+	public IDatabaseResult executeQuery(IQuery query){
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
 			System.out.println(query.process());
 			ResultSet rs2 = stmt.executeQuery(query.process()+ ";");
-			return rs2;
+			return null;//rs2;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

@@ -21,4 +21,12 @@ public class WhereInQuery implements IDbCondition {
 		return field+" in ("+values.stream().map(v -> "'"+v+"'").collect(Collectors.joining(","))+")";
 	}
 
+	public String getColumn() {
+		return field;
+	}
+
+	public ArrayList<String> getValues() {
+		return values;
+	}
+
 }

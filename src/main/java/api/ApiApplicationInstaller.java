@@ -7,6 +7,7 @@ import database.IDatabase;
 import database.mysql.MySqlDatabase;
 import database.mysql.MySqlDatabaseConfiguration;
 import domains.images.ImageRepository;
+import domains.tags.TagRepository;
 
 
 public class ApiApplicationInstaller {
@@ -24,9 +25,9 @@ public class ApiApplicationInstaller {
 	private void InstallDatabase(DefaultPicoContainer container) {
 		MySqlDatabaseConfiguration config = new MySqlDatabaseConfiguration();
 		
-		config.Password = "1234";
-		config.ServerName = "myserver";
-		config.UserName = "testuser";
+		config.Password = "password";
+		config.ServerName = "metadata";
+		config.UserName = "pi";
 		
 		container.addComponent(MySqlDatabaseConfiguration.class, config);
 		container.addComponent(IDatabase.class, MySqlDatabase.class);
@@ -39,6 +40,7 @@ public class ApiApplicationInstaller {
 	
 	private void InstallRepositories(DefaultPicoContainer container) {
 		container.addComponent(ImageRepository.class);
+		container.addComponent(TagRepository.class);
 	}
 
 

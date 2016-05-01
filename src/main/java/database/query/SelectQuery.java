@@ -9,7 +9,12 @@ import database.query.sort.IDbSort;
 public class SelectQuery implements IQuery {
 
 	private ArrayList<String> rows = new ArrayList<String>();
+	
 	private ArrayList<IDbCondition> conditions = new ArrayList<IDbCondition>();
+	public ArrayList<IDbCondition> getConditions() {
+		return conditions;
+	}
+
 	private ArrayList<IDbSort> sorts = new ArrayList<IDbSort>();
 	private String table;
 	
@@ -56,12 +61,18 @@ public class SelectQuery implements IQuery {
 		return "select "+rowString+" from "+table+conditionString+sortString;
 	}
 
+	
+	
 	public void addCondition(IDbCondition c) {
 		conditions.add(c);
 	}
 
 	public void addSort(IDbSort s) {
 		sorts.add(s);
+	}
+
+	public String getTable() {
+		return table;
 	}
 
 }
