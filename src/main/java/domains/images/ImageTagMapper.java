@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import database.IDatabase;
 import infrastructure.map.BaseListMapper;
 
-public class ImageMapHelper extends BaseListMapper<Image> {
+public class ImageTagMapper extends BaseListMapper<Image> {
 
 
-	public ImageMapHelper(IDatabase database) {
+	public ImageTagMapper(IDatabase database) {
 		super(database);
 	}
 

@@ -1,7 +1,9 @@
 package infrastructure;
 
-public interface IModel {
+import Serialization.ISerializable;
 
-	String Serialize();
+public interface IModel extends ISerializable{
+
 	int getId();
+	IModel buildClone();
 }

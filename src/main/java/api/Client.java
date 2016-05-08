@@ -3,43 +3,51 @@ package api;
 import java.util.List;
 
 import domains.Domain;
-import domains.images.ImageRepository;
-import domains.tags.TagRepository;
+import domains.images.ImageDomain;
+import domains.tags.TagDomain;
 import infrastructure.IApiClient;
 import infrastructure.IModel;
 import infrastructure.repositories.IRepository;
 
 public class Client implements IApiClient{
 
-	protected ImageRepository imageRepository;
-	protected TagRepository tagRepository;
+	private ImageDomain imageDomain;
+	private TagDomain tagDomain;
 
-	public Client(){
-		ApiApplicationInstaller installer = new ApiApplicationInstaller();
-		this.imageRepository = installer.GetComponent(ImageRepository.class);
-		this.tagRepository = installer.GetComponent(TagRepository.class);
-	}
-	
-	public List<IModel> Search(ApiRequest request){
-		@SuppressWarnings("rawtypes")
-		IRepository repository = GetRepository(request.domain);
+	public Client(ApiConfiguration configuration){
+		if (configuration == null){
+			throw new IllegalArgumentException("API configuration was null");
+		}
 		
-		System.out.println(request.specifications);
-		@SuppressWarnings("unchecked")
-		List<IModel> domainModels = repository.Retrieve(request.specifications);
+		ApiApplicationInstaller installer = new ApiApplicationInstaller(configuration);
+		this.imageDomain = installer.GetComponent(ImageDomain.class);
+		this.tagDomain = installer.GetComponent(TagDomain.class);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<IModel> Search(ApiRequest request){
+		IRepository repository = request.domain.getRepository();
+		
+		List<Integer> ids;
+		if (request.specifications.isIdentifierLookup()){
+			ids = request.specifications.getIds();
+		} else{
+			ids = repository.Search(request.specifications);		
+		}
+		
+		List<IModel> domainModels = repository.Retrieve(ids);
 		
 		return domainModels;
 	}
-
-	private IRepository<?> GetRepository(Domain domain) {
-		switch (domain) {
-		case Images:
-			return imageRepository;
-		case Tags:
-			return tagRepository;
-		default:
-			return null;
+	
+	public Domain<?,?> getDomain(String domainName){
+		switch(domainName){
+			case "images":
+				return imageDomain;
+			case "tags":
+				return tagDomain;
+			default:
+				return null;
 		}
 	}
-
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import database.query.IQuery;
-
 public class WhereInQuery implements IDbCondition {
 
 	private String field;

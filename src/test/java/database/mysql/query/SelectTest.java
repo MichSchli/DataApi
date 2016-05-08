@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.mockito.Mockito;
 
-import api.ClientTest;
 import database.query.SelectQuery;
 import database.query.condition.IDbCondition;
 import database.query.sort.IDbSort;

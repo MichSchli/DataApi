@@ -53,7 +53,7 @@ public class MySqlDatabase implements IDatabase {
 			stmt = conn.createStatement();
 			System.out.println(query.process());
 			ResultSet rs2 = stmt.executeQuery(query.process()+ ";");
-			return null;//rs2;
+			return new MySqlDatabaseResult(rs2);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

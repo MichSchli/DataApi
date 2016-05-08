@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import database.DatabaseException;
 import database.IDatabase;
 import database.IDatabaseResult;
-import database.mysql.query.SelectTest;
 import database.query.IQuery;
 import database.query.SelectQuery;
 import database.query.condition.IDbCondition;
@@ -31,13 +30,13 @@ public class BaseListMapperTest extends TestCase
 		}
 		
 		@Override
-		public String Serialize() {
-			return "";
+		public int getId() {
+			return id;
 		}
 
 		@Override
-		public int getId() {
-			return id;
+		public IModel buildClone() {
+			return new FakeModel(id);
 		}
 		
 	}
@@ -101,7 +100,7 @@ public class BaseListMapperTest extends TestCase
     	
     	ArrayList<FakeModel> models = new ArrayList<FakeModel>();
     	models.add(new FakeModel(5));
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db).executeQuery(assertArg(query -> assertEquals(mapper.getDbMap(), ((SelectQuery) query).getTable())));
     }
@@ -119,7 +118,7 @@ public class BaseListMapperTest extends TestCase
     	
     	ArrayList<FakeModel> models = new ArrayList<FakeModel>();
     	models.add(new FakeModel(5));
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db).executeQuery(assertArg(query -> assertHasWhereConditionWithColumnId(mapper.getFromIdColumn(), query)));
     }
@@ -137,7 +136,7 @@ public class BaseListMapperTest extends TestCase
     	
     	ArrayList<FakeModel> models = new ArrayList<FakeModel>();
     	models.add(new FakeModel(5));
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db).executeQuery(assertArg(query -> assertEquals(1, ((SelectQuery) query).getConditions().size())));
     }
@@ -163,7 +162,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db).executeQuery(assertArg(query -> assertHasWhereConditionWithIdValues(ids, query)));
     }
@@ -189,7 +188,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db, Mockito.times(1)).executeQuery(Mockito.any(IQuery.class));
     }
@@ -213,7 +212,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(db, Mockito.never()).executeQuery(Mockito.any(IQuery.class));
     }
@@ -259,7 +258,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	assertTrue(fm1.idsToMap.isEmpty());
     	assertTrue(fm2.idsToMap.isEmpty());
@@ -289,7 +288,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	Mockito.verify(dbResult).getInt(mapper.getFromIdColumn());
     	Mockito.verify(dbResult).getInt(mapper.getToIdColumn());
@@ -320,7 +319,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	assertEquals(1, fm1.idsToMap.size());
     	assertEquals(toId, fm1.idsToMap.get(0).intValue());
@@ -351,7 +350,7 @@ public class BaseListMapperTest extends TestCase
 			ids.add(Integer.toString(model.id));
 		}
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	assertEquals(2, fm1.idsToMap.size());
     	assertEquals(toId1, fm1.idsToMap.get(0).intValue());
@@ -384,7 +383,7 @@ public class BaseListMapperTest extends TestCase
     	models.add(fm2);
     	models.add(fm3);
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	assertEquals(1, fm1.idsToMap.size());
     	assertEquals(0, fm2.idsToMap.size());
@@ -423,7 +422,7 @@ public class BaseListMapperTest extends TestCase
     	models.add(fm3);
     	models.add(fm4);
     	
-    	mapper.addMap(models);
+    	mapper.doMap(models);
     	
     	assertEquals(1, fm1.idsToMap.size());
     	assertEquals(0, fm2.idsToMap.size());

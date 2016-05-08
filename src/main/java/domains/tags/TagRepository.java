@@ -1,17 +1,13 @@
 package domains.tags;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import database.DatabaseException;
 import database.IDatabase;
 import database.IDatabaseResult;
 import database.query.IQuery;
-import infrastructure.SpecificationHelper;
 import infrastructure.repositories.BaseRepository;
 import infrastructure.specifications.ISpecification;
 
-public class TagRepository extends BaseRepository<Tag> {
+public class TagRepository extends BaseRepository<Tag, TagSpecification> implements ITagRepository {
 
 	public TagRepository(IDatabase database) {
 		super(database);
@@ -19,7 +15,7 @@ public class TagRepository extends BaseRepository<Tag> {
 
 	@Override
 	public IQuery SpecificationsToQuery(ISpecification specification) {
-		return SpecificationHelper.SpecificationToQuery(specification, "tags");
+		return null;
 	}
 
 	@Override
@@ -36,6 +32,11 @@ public class TagRepository extends BaseRepository<Tag> {
 	public IQuery ModelToQuery(Tag model) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getTable() {
+		return "tags";
 	}
 
 

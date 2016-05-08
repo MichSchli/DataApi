@@ -68,5 +68,10 @@
     	<version>0.3.0</version>
     	<scope>test</scope>
 	</dependency>
+		<dependency>
+			<groupId>michael.avalon</groupId>
+			<artifactId>utilities</artifactId>
+			<version>1.0</version>
+		</dependency>
   </dependencies>
 </project>

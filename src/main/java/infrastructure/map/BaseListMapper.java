@@ -18,7 +18,7 @@ public abstract class BaseListMapper<TModel extends IModel> implements IDataMapp
 		this.database = database;
 	}
 	
-	public void addMap(List<TModel> models) {
+	public void doMap(List<TModel> models) {
 		if (!models.isEmpty()){
 			IDatabaseResult maps = getMapsFromDatabase(models);
 			addMapsToModels(models, maps);

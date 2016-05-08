@@ -1,22 +1,23 @@
 package domains.tags;
 
+import Serialization.ISerializable;
 import infrastructure.IModel;
 
-public class Tag implements IModel {
+public class Tag implements IModel{
 	public int id;
 	public String name;
 	
 	@Override
-	public String Serialize() {
-		return "{\n"
-				+ "\"id\":"+id+",\n"
-				+ "\"name\":\""+name+"\"\n"
-						+ "}";
+	public int getId(){
+		return id;
 	}
 
 	@Override
-	public int getId(){
-		return id;
+	public Tag buildClone() {
+		Tag t = new Tag();
+		t.id = id;
+		t.name = name;
+		return t;
 	}
 
 }
