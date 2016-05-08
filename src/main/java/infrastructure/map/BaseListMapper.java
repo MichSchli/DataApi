@@ -1,6 +1,7 @@
 package infrastructure.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import database.DatabaseException;
@@ -32,22 +33,18 @@ public abstract class BaseListMapper<TModel extends IModel> implements IDataMapp
 	}
 
 	private void addMapsToModels(List<TModel> models, IDatabaseResult maps) {
-		int current = 0;
+		HashMap<Integer, TModel> idToModelMap = new HashMap<Integer, TModel>();
+		
+		for (TModel model : models) {
+			idToModelMap.put(model.getId(), model);
+		}
 		
 		try {
 			while(maps.next()){
 				int modelid = maps.getInt(getFromIdColumn());
 				int foreignid = maps.getInt(getToIdColumn());
-				
-				TModel currentModel = models.get(current);
-				
-				// Progress list to next match:
-				while(currentModel.getId() != modelid){
-					current += 1;
-					currentModel = models.get(current);
-				}
-				
-				getIdListOnModel(currentModel).add(foreignid);
+								
+				getIdListOnModel(idToModelMap.get(modelid)).add(foreignid);
 			}
 		} catch (DatabaseException e) {
 			e.printStackTrace();

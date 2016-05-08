@@ -392,6 +392,46 @@ public class BaseListMapperTest extends TestCase
     	assertEquals(toId3, fm3.idsToMap.get(0).intValue());
 	}
 	
+	public void testMap_MultipleModels_WrongOrder() throws DatabaseException{
+		IDatabase db = Mockito.mock(IDatabase.class);
+    	IDatabaseResult dbResult = Mockito.mock(IDatabaseResult.class);
+    	FakeListMapper mapper = new FakeListMapper(db);
+    	
+    	int fromId1 = 1;
+    	int fromId2 = 2;
+    	int fromId3 = 3;
+    	int toId1_1 = 11;
+    	int toId2_1 = 21;
+    	int toId2_2 = 22;
+    	int toId3_1 = 31;
+    	
+    	Mockito.when(dbResult.next()).thenReturn(true, true, true, true, false);
+    	Mockito.when(dbResult.getInt(mapper.getFromIdColumn())).thenReturn(fromId2, fromId3, fromId2, fromId1);
+    	Mockito.when(dbResult.getInt(mapper.getToIdColumn())).thenReturn(toId2_2, toId3_1, toId2_1, toId1_1);
+    	Mockito.when(db.executeQuery(Mockito.any(IQuery.class))).thenReturn(dbResult);
+    	
+    	ArrayList<FakeModel> models = new ArrayList<FakeModel>();
+    	
+    	FakeModel fm1 = new FakeModel(fromId1);
+    	FakeModel fm2 = new FakeModel(fromId2);
+    	FakeModel fm3 = new FakeModel(fromId3);
+    	
+    	models.add(fm1);
+    	models.add(fm2);
+    	models.add(fm3);
+    	
+    	mapper.doMap(models);
+    	
+    	assertEquals(1, fm1.idsToMap.size());
+    	assertEquals(2, fm2.idsToMap.size());
+    	assertEquals(1, fm3.idsToMap.size());
+    	
+    	assertEquals(toId1_1, fm1.idsToMap.get(0).intValue());
+    	assertTrue(fm2.idsToMap.contains(toId2_1));
+    	assertTrue(fm2.idsToMap.contains(toId2_2));
+    	assertEquals(toId3_1, fm3.idsToMap.get(0).intValue());
+	}
+	
 	public void testMap_MultipleModels_MultipleValues() throws DatabaseException{
 		IDatabase db = Mockito.mock(IDatabase.class);
     	IDatabaseResult dbResult = Mockito.mock(IDatabaseResult.class);

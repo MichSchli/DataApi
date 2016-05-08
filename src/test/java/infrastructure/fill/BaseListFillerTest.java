@@ -328,7 +328,7 @@ public class BaseListFillerTest extends TestCase
     	assertEquals(fm_r3.id, fm2.foreignsToFill.get(0).id);
     	assertEquals(fm_r4.id, fm2.foreignsToFill.get(1).id);
     }
-
+	
 	@SuppressWarnings("unchecked")
 	public void testFill_OverlappingForeigns() throws FillException{
 		IRepository<FakeModel,FakeSpecification> repository = (IRepository<FakeModel,FakeSpecification>) Mockito.mock(IRepository.class);
