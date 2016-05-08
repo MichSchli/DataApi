@@ -44,8 +44,17 @@ public abstract class BaseRepository<TModel extends IModel, TSpecification exten
 
 	@Override
 	public List<Integer> Search(TSpecification specification) {
-		// TODO Auto-generated method stub
-		return null;
+		IQuery query = SpecificationsToQuery(specification);
+		IDatabaseResult dbresults = database.executeQuery(query);
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		try {
+			while (dbresults.next()) {
+				results.add(dbresults.getInt("id"));
+			}
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 	@Override

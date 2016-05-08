@@ -4,6 +4,7 @@ import database.DatabaseException;
 import database.IDatabase;
 import database.IDatabaseResult;
 import database.query.IQuery;
+import database.query.SelectQuery;
 import infrastructure.repositories.BaseRepository;
 import infrastructure.specifications.ISpecification;
 
@@ -18,7 +19,8 @@ public class ImageRepository extends BaseRepository<Image, ImageSpecification> i
 	
 	
 	public IQuery SpecificationsToQuery(ISpecification specification) {
-		return null;
+		SelectQuery query = new SelectQuery("id", getTable());
+		return query;
 	}
 
 
