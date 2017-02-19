@@ -21,25 +21,7 @@ public class MySqlDatabase implements IDatabase {
 		dataSource.setUser(config.UserName);
 		dataSource.setPassword(config.Password);
 		dataSource.setServerName("localhost");
-		dataSource.setDatabaseName(config.ServerName);
-		
-		try {
-			conn = dataSource.getConnection();
-			Statement stmt = conn.createStatement();
-			/*
-			int rs = stmt.executeUpdate("insert into images (id, path) values ('abc123', 'hej@hej.hej')");
-			
-			System.out.println(rs);
-			*/
-			ResultSet rs2 = stmt.executeQuery("SELECT ID FROM images");
-			
-			rs2.first();
-			System.out.println(rs2.getString("id"));
-			rs2.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		dataSource.setDatabaseName(config.ServerName);		
 	}
 
 	public void executeUpdate(IQuery query){
